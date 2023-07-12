@@ -40,7 +40,7 @@ class FileSink(Sink[FileSinkConfig, SinkReport]):
     def __post_init__(self) -> None:
         fpath = pathlib.Path(self.config.filename)
         self.file = fpath.open("w")
-        self.file.write("[\n")
+       # self.file.write("[\n")
         self.wrote_something = False
 
     def write_record_async(
@@ -60,9 +60,9 @@ class FileSink(Sink[FileSinkConfig, SinkReport]):
         )
 
         if self.wrote_something:
-            self.file.write(",\n")
+           self.file.write("\n")
 
-        json.dump(obj, self.file, indent=4)
+        json.dump(obj, self.file, indent=None)
         self.wrote_something = True
 
         self.report.report_record_written(record_envelope)
@@ -70,7 +70,7 @@ class FileSink(Sink[FileSinkConfig, SinkReport]):
             write_callback.on_success(record_envelope, {})
 
     def close(self):
-        self.file.write("\n]")
+        self.file.write("\n")
         self.file.close()
 
 
