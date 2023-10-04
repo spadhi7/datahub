@@ -49,7 +49,6 @@ class FileSink(Sink[FileSinkConfig, SinkReport]):
     def __post_init__(self) -> None:
         fpath = pathlib.Path(self.config.filename)
         self.file = fpath.open("w")
-       # self.file.write("[\n")
         self.wrote_something = False
 
     def write_record_async(
